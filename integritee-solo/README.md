@@ -1,9 +1,10 @@
-# SubQuery - Starter Package
+# SubQuery - Integritee SoloChain
 
-The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
-A SubQuery package defines which data The SubQuery will index from the Substrate blockchain, and how it will store it.
+# Info
+The ancient blocks of our integritee solochain are only compatible with the subql-node <= v1.0.0, which is why we have
+to use the old version. (It might be that we have to change this version at some block)
 
-## Preparation
+## Preparation (Standard SubQl Documentation)
 
 #### Environment
 
