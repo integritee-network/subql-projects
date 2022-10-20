@@ -16,19 +16,14 @@ network:
   chainId: '0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe'
   endpoint: 'wss://api.solo.integritee.io'
   dictionary: 'https://api.subquery.network/sq/subquery/kusama-dictionary'
-  chainTypes: './chain_types/integritee-solochain-typedefs.json'
 dataSources:
   - kind: substrate/Runtime
     startBlock: 1
     mapping:
       file: ./dist/index.js
       handlers:
-        - handler: handleBlock
-          kind: substrate/BlockHandler
         - handler: handleEvent
           kind: substrate/EventHandler
           filter:
             module: balances
-            method: Deposit
-        - handler: handleCall
-          kind: substrate/CallHandler
+            method: Transfer
