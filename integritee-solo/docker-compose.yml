@@ -1,12 +1,11 @@
-version: "3"
-
+version: '3'
 services:
   postgres:
     build:
       context: .
       dockerfile: ./docker/pg-Dockerfile
     ports:
-      - 5432:5432
+      - "5432"
     volumes:
       - .data/postgres:/var/lib/postgresql/data
     environment:
@@ -16,12 +15,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
   subquery-node:
     image: onfinality/subql-node:latest
     depends_on:
-      "postgres":
-        condition: service_healthy
+      - "postgres"
     restart: always
     environment:
       DB_USER: postgres
@@ -31,6 +28,7 @@ services:
       DB_PORT: 5432
     volumes:
       - ./:/app
+    #command: dockerize -wait tcp://postgres:5432 f=/app --db-schema=app --disable-historical=false
     command:
       - -f=/app
       - --db-schema=app
@@ -40,16 +38,13 @@ services:
       interval: 3s
       timeout: 5s
       retries: 10
-
   graphql-engine:
     image: onfinality/subql-query:latest
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
-      "postgres":
-        condition: service_healthy
-      "subquery-node":
-        condition: service_healthy
+      - "postgres"
+      - "subquery-node"
     restart: always
     environment:
       DB_USER: postgres
@@ -57,7 +52,8 @@ services:
       DB_DATABASE: postgres
       DB_HOST: postgres
       DB_PORT: 5432
-    command:
-      - --name=app
-      - --playground
-      - --indexer=http://subquery-node:3000
+    command: dockerize -wait tcp://postgres:5432 -wait web://subquery-node:3000 --name=app --playground --indexer=http://subquery-node:3000
+    # command:
+    #   - --name=app
+    #   - --playground
+    #   - --indexer=http://subquery-node:3000
