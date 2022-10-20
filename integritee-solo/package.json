@@ -20,9 +20,9 @@
   "author": "SubQuery Network",
   "license": "MIT",
   "devDependencies": {
-    "@polkadot/api": "8.12.2",
-    "@subql/types": "v1.2.0",
+    "@polkadot/api": "9",
+    "@subql/types": "v1.5.2-0",
     "typescript": "^4.1.3",
-    "@subql/cli": "v1.4.0"
+    "@subql/cli": "v1.6.5-1"
   }
 }
